@@ -21,11 +21,17 @@
         </form>
         <form action="ShoppingList" method="POST">
             <input type="hidden" name="action" value="delete">
-            <c:forEach items="${itemList}" var="item">
-                <input type="radio" name="item" id="list-item" value="${item}">
-                <label for="list-item">${item}</label>
-            </c:forEach>
-            
+            <table>
+                <c:forEach items="${itemList}" var="item">
+                    <tr>
+                        <td>
+                            <input type="radio" name="item" id="list-item" value="${item}">
+                            <label for="list-item">${item}</label>
+                        </td>
+                        
+                    </tr>
+                </c:forEach>
+            </table>
             <button type="submit">Delete</button>
         </form>
         
