@@ -3,6 +3,7 @@ package ca.sait.lab5.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,9 +47,20 @@ public class ShoppingListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
+        String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        session.setAttribute("name", name);
-        getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+        if (action != null && action.equals("add")) {
+            String item = request.getParameter("item");
+            ArrayList<String> itemList = (ArrayList<String>) session.getAttribute("itemList");
+            itemList.add(item);
+            session.setAttribute("itemList", itemList);
+        } else {
+            String name = request.getParameter("name");
+            session.setAttribute("name", name);
+            ArrayList<String> itemList = new ArrayList<>();
+            session.setAttribute("itemList", itemList);
+            getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+        }
+        
     }
 }
