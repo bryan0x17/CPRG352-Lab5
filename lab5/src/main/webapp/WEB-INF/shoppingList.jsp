@@ -10,7 +10,8 @@
     </head>
     <body>
         <h1>Shopping List</h1>
-        <p>Hello ${name}<a href="">Logout</a></p>
+        <p>Hello ${name}</p>
+        <a href="ShoppingList?action=logout">Logout</a>
         <h2>List</h2>
         <form action="ShoppingList" method="POST">
             <input type="hidden" name="action" value="add">
