@@ -49,18 +49,30 @@ public class ShoppingListServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        if (action != null && action.equals("add")) {
+        
+        if (action != null && session.getAttribute("name") == null) {
+            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            return;
+        } else if (action != null && action.equals("add")) {
             String item = request.getParameter("item");
             ArrayList<String> itemList = (ArrayList<String>) session.getAttribute("itemList");
             itemList.add(item);
             session.setAttribute("itemList", itemList);
-        } else {
+        } else if (action != null && action.equals("delete")) {
+            String item = request.getParameter("item");
+            ArrayList<String> itemList = (ArrayList<String>) session.getAttribute("itemList");
+            itemList.remove(item);
+            session.setAttribute("itemList", itemList);
+        }
+        
+        else {
             String name = request.getParameter("name");
             session.setAttribute("name", name);
             ArrayList<String> itemList = new ArrayList<>();
             session.setAttribute("itemList", itemList);
-            getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+            
         }
+        getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
         
     }
 }
